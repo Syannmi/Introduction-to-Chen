@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>陳献為 | Chen, Xian-wei</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tiffany: '#0ABAB5',       // 主色 (亮)
+                        tiffanyLight: '#E0F7F6',  // 背景淺色
+                        tiffanyDark: '#008F8A',   // 深色 (文字/Footer)
+                        slateDark: '#333333',
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                        mono: ['"Roboto Mono"', 'monospace'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 30px -10px rgba(10, 186, 181, 0.3)',
+                        'glow': '0 0 15px rgba(10, 186, 181, 0.6)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'spin-slow': 'spin 4s linear infinite',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 全局設定 */
+        body {
+            background-color: #ffffff;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* 科技感背景網格 */
+        .tech-bg {
+            background-image: 
+                linear-gradient(rgba(10, 186, 181, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(10, 186, 181, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* 導覽列 */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(10, 186, 181, 0.1);
+        }
+
+        /* Scroll Reveal 動畫 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 技能卡片 */
+        .skill-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 140px; 
+            overflow: hidden;
+            position: relative;
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
+        }
+        .skill-card:hover {
+            max-height: 1500px;
+            border-color: #0ABAB5;
+            box-shadow: 0 10px 30px rgba(10, 186, 181, 0.15);
+            z-index: 20;
+        }
+        .skill-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to top, #ffffff, transparent);
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .skill-card:hover::after { opacity: 0; }
+
+        /* --- 緊湊型時間軸 --- */
+        .timeline-wrapper {
+            width: 100%;
+            position: relative;
+            padding: 140px 0 40px 0; 
+            overflow-x: auto; 
+        }
+        .timeline-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            width: 100%;
+            max-width: 850px; 
+            min-width: 800px; 
+            margin: 0 auto; 
+            padding-bottom: 20px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .timeline-line {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 0px;
+            border-top: 2px dashed #0ABAB5; 
+            opacity: 0.4;
+            z-index: 0;
+        }
+        .timeline-item {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 2px;
+            transition: transform 0.3s;
+        }
+        .timeline-item:hover {
+            transform: translateY(-5px);
+        }
+        .timeline-dot {
+            width: 30px;
+            height: 30px;
+            background-color: #ffffff;
+            border: 3px solid #0ABAB5;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .timeline-dot::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background-color: #0ABAB5;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .timeline-item:hover .timeline-dot {
+            background-color: #E0F7F6;
+            box-shadow: 0 0 15px rgba(10, 186, 181, 0.4);
+        }
+        .timeline-item:hover .timeline-dot::after {
+            opacity: 1;
+        }
+        .timeline-key-term {
+            font-weight: 700;
+            color: #555;
+            font-size: 0.8rem;
+            margin-bottom: 4px;
+            transition: color 0.3s;
+            white-space: nowrap; 
+        }
+        .timeline-item:hover .timeline-key-term {
+            color: #0ABAB5;
+        }
+        .timeline-date {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.65rem;
+            color: #94a3b8;
+            white-space: nowrap;
+        }
+
+        /* 懸浮資訊卡 (Tooltip) */
+        .timeline-info {
+            position: absolute;
+            bottom: 95px; 
+            left: 50%; /* 預設置中 */
+            transform: translateX(-50%) translateY(10px);
+            width: 320px;
+            background-color: #ffffff;
+            border: 1px solid #0ABAB5;
+            padding: 15px;
+            border-radius: 12px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            pointer-events: none; 
+            z-index: 100;
+            text-align: left; 
+        }
+        .timeline-info::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            margin-left: -8px;
+            border-width: 8px 8px 0;
+            border-style: solid;
+            border-color: #0ABAB5 transparent transparent transparent;
+        }
+        .timeline-item:hover .timeline-info {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Tooltip 位置調整 (僅針對第一個項目靠左，其餘保持預設置中) */
+        .timeline-item:first-child .timeline-info {
+            left: 0;
+            transform: translateY(10px); 
+        }
+        .timeline-item:first-child .timeline-info::after {
+            left: 15px; 
+            margin-left: 0;
+        }
+        /* 已移除最後一個項目靠右的設定，回復置中 */
+
+        /* --- 大頭貼光條特效 --- */
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .profile-container {
+            position: relative;
+            padding: 4px; /* 光條寬度 */
+            border-radius: 1rem;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .profile-container::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(transparent, transparent, transparent, #0ABAB5);
+            animation: spin-slow 4s linear infinite;
+            z-index: -2;
+        }
+        .profile-container::after {
+            content: '';
+            position: absolute;
+            inset: 4px; /* 遮住中間，留下邊框 */
+            background: white;
+            border-radius: 0.8rem;
+            z-index: -1;
+        }
+
+        /* --- 4. 外圍跑動線條特效 --- */
+        .border-runner {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .border-runner span {
+            position: absolute;
+            display: block;
+            background: #0ABAB5;
+            box-shadow: 0 0 10px #0ABAB5, 0 0 20px #0ABAB5;
+        }
+        .border-runner span:nth-child(1) {
+            top: 0; left: -100%; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, #0ABAB5);
+            animation: btn-anim1 4s linear infinite;
+        }
+        .border-runner span:nth-child(2) {
+            top: -100%; right: 0; width: 2px; height: 100%;
+            background: linear-gradient(180deg, transparent, #0ABAB5);
+            animation: btn-anim2 4s linear infinite;
+            animation-delay: 1s;
+        }
+        .border-runner span:nth-child(3) {
+            bottom: 0; right: -100%; width: 100%; height: 2px;
+            background: linear-gradient(270deg, transparent, #0ABAB5);
+            animation: btn-anim3 4s linear infinite;
+            animation-delay: 2s;
+        }
+        .border-runner span:nth-child(4) {
+            bottom: -100%; left: 0; width: 2px; height: 100%;
+            background: linear-gradient(360deg, transparent, #0ABAB5);
+            animation: btn-anim4 4s linear infinite;
+            animation-delay: 3s;
+        }
+
+        @keyframes btn-anim1 {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        @keyframes btn-anim2 {
+            0% { top: -100%; }
+            50%, 100% { top: 100%; }
+        }
+        @keyframes btn-anim3 {
+            0% { right: -100%; }
+            50%, 100% { right: 100%; }
+        }
+        @keyframes btn-anim4 {
+            0% { bottom: -100%; }
+            50%, 100% { bottom: 100%; }
+        }
+
+        /* 卷軸美化 */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f8fafc; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0ABAB5; }
+    </style>
+</head>
+<body class="antialiased font-sans text-slate-700 tech-bg">
+
+    <div class="border-runner">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="fixed top-20 left-10 w-32 h-32 bg-tiffany/5 rounded-full blur-3xl animate-float -z-10"></div>
+    <div class="fixed bottom-40 right-10 w-64 h-64 bg-tiffany/10 rounded-full blur-3xl animate-float-delayed -z-10"></div>
+
+    <nav class="glass-nav fixed w-full z-50 transition-all duration-300">
+        <div class="max-w-[1440px] mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold tracking-wider text-tiffanyDark flex items-center gap-2 group">
+                <div class="w-8 h-8 rounded bg-tiffany flex items-center justify-center text-white shadow-glow group-hover:rotate-12 transition">
+                    <i class="fa-solid fa-code text-sm"></i>
+                </div>
+                <span>陳　献為 <span class="text-xs text-gray-400 font-mono ml-1">Chen, Xian-wei</span></span>
+            </a>
+            <div class="hidden lg:flex space-x-1 text-sm font-medium text-gray-500">
+                <a href="#about" class="px-4 py-2 hover:text-tiffany hover:bg-tiffanyLight rounded-lg transition">關於我</a>
+                <a href="#experience" class="px-4 py-2 hover:text-tiffany hover:bg-tiffanyLight rounded-lg transition">經歷</a>
+                <a href="#projects" class="px-4 py-2 hover:text-tiffany hover:bg-tiffanyLight rounded-lg transition">專案</a>
+                <a href="#activities" class="px-4 py-2 hover:text-tiffany hover:bg-tiffanyLight rounded-lg transition">活動</a>
+                <a href="#demo" class="px-4 py-2 hover:text-tiffany hover:bg-tiffanyLight rounded-lg transition">教學實錄</a>
+                <a href="#skills" class="px-4 py-2 hover:text-tiffany hover:bg-tiffanyLight rounded-lg transition">技能</a>
+            </div>
+             <a href="#contact" class="hidden md:inline-flex items-center bg-tiffanyDark text-white px-6 py-2 rounded-full hover:bg-tiffany transition shadow-soft hover:shadow-glow text-sm font-bold transform hover:-translate-y-0.5">
+                <i class="fa-regular fa-paper-plane mr-2"></i> 聯絡我
+            </a>
+        </div>
+    </nav>
+
+    <header id="about" class="pt-40 pb-20 relative overflow-hidden">
+        <div class="max-w-[1440px] mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row items-start justify-between gap-8 md:gap-16">
+                
+                <div class="md:w-3/4 reveal active">
+                    <h1 class="text-3xl md:text-5xl font-bold text-slate-800 mb-2 tracking-tight">陳　献為 Chen, Xian-wei</h1>
+                    <p class="text-tiffany text-xl font-medium mb-10 font-mono">MA in Linguistics / Bilingual Educator</p>
+                    
+                    <div class="space-y-10 text-slate-600 leading-relaxed text-justify">
+                        <div class="relative pl-6 border-l-2 border-tiffany/30 hover:border-tiffany transition duration-300">
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">我的專業－語言學</h3>
+                            <p class="mb-4">
+                                目前就讀於<span class="text-tiffany font-bold">國立中山大學外國語文學系碩士班</span>，同時為<span class="text-tiffany font-bold">中等教育師資培育生（雙語）</span>。自高中畢業後我參與了許多教育相關的活動，也會藉由舉辦營隊增加自己與孩子們相處的經驗。
+                            </p>
+                            <p>
+                                大學期間，我的專長是<span class="text-tiffany font-bold">語言學</span>以及<span class="text-tiffany font-bold">語言教學</span>，語言學課程訓練我如何藉由語言知識，有邏輯性地教導學生子母音之音位以及句法結構；而語言教學課程介紹到根據不同的學習目的以及學習階段，如何搭配各式教學法，以達到因材施教的理想。
+                            </p>
+                        </div>
+
+                        <div class="relative pl-6 border-l-2 border-tiffany/30 hover:border-tiffany transition duration-300">
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">教學理念－孰能生巧</h3>
+                            <p class="mb-4">
+                                在多年的教學經驗中，由於我的個性開朗，也經常分享自身的學習經驗，我與學生的相處狀況都非常融洽。學生們為了展現對於我的信任，課程若有不解之處總會主動提問，在課餘時間也願意與我分享生活瑣事，也因此在課堂中，我也能夠<span class="text-tiffany font-bold">運用貼近學生生活的方式教授語言</span>。
+                            </p>
+                            <p>
+                                對於教學內容我也絕不馬虎，除了講義的練習題之外，我更會藉由題庫系統<span class="text-tiffany font-bold">提供學生更多練習機會</span>，檢討時也會藉由學生易混淆之處，整理出一套屬於自己的比較筆記。
+                            </p>
+                        </div>
+
+                        <div class="relative pl-6 border-l-2 border-tiffany/30 hover:border-tiffany transition duration-300">
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">不積跬步，無以至千里</h3>
+                            <p class="mb-4">
+                                <strong>國中：</strong>單字以及文法強調基本的詞性以及語法概念。我會確定學生是否懂得<span class="text-tiffany font-bold">單詞之詞性與其意，結合課內文法以及生活中常用的話語</span>，為學生的語言學習建構出基底。
+                            </p>
+                            <p>
+                                <strong>高中：</strong>面對千變萬化的高中題型，我會<span class="text-tiffany font-bold">補充同義詞、相似詞及搭配詞</span>供學生學習外，針對不同的題型，教導學生<span class="text-tiffany font-bold">思考邏輯</span>對於語言學習的重要性。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:w-1/4 flex flex-col items-end reveal" style="transition-delay: 0.2s;">
+                    <div class="w-64 h-100 mb-12 profile-container shadow-soft">
+                        <div class="w-full h-full rounded-[0.8rem] overflow-hidden relative z-10">
+                            <img src="Chen.webp" alt="陳献為" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <div class="w-full mb-8">
+                        <h4 class="text-xs font-bold text-tiffany uppercase tracking-widest mb-6 flex items-center">
+                             Education <i class="fa-solid fa-graduation-cap ml-2 mr-4"></i>
+                             <div class="h-px bg-tiffany/20 flex-grow"></div>
+                        </h4>
+                        <div class="border-l-2 border-tiffanyLight ml-3 space-y-8">
+                            <div class="relative pl-8 group text-left">
+                                <div class="absolute -left-[7px] top-1.5 w-3 h-3 rounded-full bg-tiffany border-2 border-white shadow group-hover:scale-125 transition"></div>
+                                <span class="text-xs text-gray-400 font-mono block mb-1">2021/09 - Now</span>
+                                <a href="https://zephyr.nsysu.edu.tw/index.php" target="_blank" class="font-bold text-slate-700 text-lg group-hover:text-tiffany transition flex items-center">
+                                    國立中山大學 <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-2 opacity-0 group-hover:opacity-100 transition"></i>
+                                </a>
+                                <p class="text-sm text-gray-500">外國語文學系碩士班（應用語言學組）</p>
+                            </div>
+                            <div class="relative pl-8 group text-left">
+                                <div class="absolute -left-[7px] top-1.5 w-3 h-3 rounded-full bg-tiffany border-2 border-white shadow group-hover:bg-tiffany transition"></div>
+                                <span class="text-xs text-gray-400 font-mono block mb-1">2023/04 - 2023/08</span>
+                                <a href="https://www.univ.gakushuin.ac.jp/academics/graduate_let/" target="_blank" class="font-bold text-slate-700 text-lg group-hover:text-tiffany transition flex items-center">
+                                    日本学習院大学 <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-2 opacity-0 group-hover:opacity-100 transition"></i>
+                                </a>
+                                <p class="text-sm text-gray-500">人文社会科学研究科 (交換留學)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full">
+                        <h4 class="text-xs font-bold text-tiffany uppercase tracking-widest mb-6 flex items-center">
+                            Certificates <i class="fa-solid fa-certificate ml-2 mr-4"></i>
+                            <div class="h-px bg-tiffany/20 flex-grow"></div>
+                        </h4>
+                        <div class="border-l-2 border-tiffanyLight ml-3 space-y-6">
+                            <div class="relative pl-8 group text-left">
+                                <i class="fa-solid fa-star absolute -left-2 top-1 text-tiffany text-sm bg-white"></i>
+                                <div>
+                                    <div class="font-bold text-slate-700 group-hover:text-tiffany transition">TOEIC 多益</div>
+                                    <div class="text-xs text-gray-500 font-medium">金色證書</div>
+                                </div>
+                            </div>
+                            <div class="relative pl-8 group text-left">
+                                <i class="fa-solid fa-check-circle absolute -left-2 top-1 text-tiffany text-sm bg-white"></i>
+                                <div>
+                                    <div class="font-bold text-slate-700 group-hover:text-tiffany transition">GEPT 全民英檢</div>
+                                    <div class="text-xs text-gray-500">中高級 通過</div>
+                                </div>
+                            </div>
+                            <div class="relative pl-8 group text-left">
+                                <i class="fa-solid fa-id-card absolute -left-2 top-1 text-tiffany text-sm bg-white"></i>
+                                <div>
+                                    <div class="font-bold text-slate-700 group-hover:text-tiffany transition">教育部</div>
+                                    <div class="text-xs text-gray-500">中等學校教師證書</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="experience" class="bg-gradient-to-b from-white to-tiffanyLight/10 border-t border-tiffany/10 reveal">
+        <div class="max-w-[1440px] mx-auto px-6 pt-20">
+            <div class="flex flex-col items-center mb-0">
+                <span class="bg-tiffany/10 text-tiffany px-4 py-1 rounded-full text-xs font-bold tracking-widest mb-2">TIMELINE</span>
+                <h2 class="text-3xl font-bold text-slate-800">Relevant Experience</h2>
+                <p class="text-gray-400 text-sm font-mono mt-2"><i class="fa-solid fa-hand-pointer animate-bounce mr-2"></i>Hover nodes for details</p>
+            </div>
+
+            <div class="timeline-wrapper">
+                <div class="timeline-container">
+                    <div class="timeline-line"></div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-key-term">英語志工</div>
+                        <div class="timeline-date">2018/02-06</div>
+                        <div class="timeline-info">
+                            <h4 class="font-bold text-tiffany text-lg">英語志工老師</h4>
+                            <span class="text-xs text-gray-500 block mb-2 font-mono">高雄市立深水國小</span>
+                        </div>
+                    </div>
+
+                     <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-key-term">大學伴</div>
+                        <div class="timeline-date">2019/09-2020/02</div>
+                        <div class="timeline-info">
+                            <h4 class="font-bold text-tiffany text-lg">英語科－大學伴</h4>
+                            <span class="text-xs text-gray-500 block mb-2 font-mono">教育部數位學伴－嘉義縣立東石國小</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot bg-tiffany border-tiffany text-white shadow-glow"></div>
+                        <div class="timeline-key-term text-tiffany">兼職家教</div>
+                        <div class="timeline-date">2021/01 - Now</div>
+                        <div class="timeline-info">
+                            <h4 class="font-bold text-tiffany text-lg">兼職家教</h4>
+                            <span class="text-xs text-gray-500 block mb-2 font-mono">Current</span>
+                            <p class="text-xs text-gray-600">教授科目：國文、英文、社會、日本語。</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot bg-tiffany border-tiffany text-white shadow-glow"></div>
+                        <div class="timeline-key-term text-tiffany">英文講師</div>
+                        <div class="timeline-date">2021/07 - Now</div>
+                        <div class="timeline-info">
+                            <h4 class="font-bold text-tiffany text-lg">國中／高中英文講師</h4>
+                            <span class="text-xs text-gray-500 block mb-2 font-mono">高雄市文理補習班</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-key-term">計畫總召</div>
+                        <div class="timeline-date">2022/07</div>
+                        <div class="timeline-info">
+                            <h4 class="font-bold text-tiffany text-lg">總召</h4>
+                            <span class="text-xs text-gray-500 block mb-2 font-mono">高雄市立鼓山高級中學雙語教學實作計畫</span>
+                        </div>
+                    </div>
+
+                    <a href="https://lstsc.github.io" target="_blank" class="timeline-item group">
+                         <div class="timeline-dot group-hover:bg-tiffany group-hover:scale-125 cursor-pointer">
+                             <i class="fa-solid fa-link text-white text-[10px] opacity-0 group-hover:opacity-100 transition"></i>
+                        </div>
+                        <div class="timeline-key-term underline decoration-dotted underline-offset-4 group-hover:text-tiffany">學會總召</div>
+                        <div class="timeline-date">2022/11-2024/10</div>
+                        <div class="timeline-info">
+                            <h4 class="font-bold text-tiffany text-lg">學生總召／副召 <i class="fa-solid fa-arrow-up-right-from-square text-xs ml-1"></i></h4>
+                            <span class="text-xs text-gray-500 block mb-2 font-mono">中央研究院－台灣語言學學會</span>
+                        </div>
+                    </a>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-key-term">教學助理</div>
+                        <div class="timeline-date">2023/09-2024/06</div>
+                        <div class="timeline-info">
+                            <h4 class="font-bold text-tiffany text-lg">教學助理</h4>
+                            <span class="text-xs text-gray-500 block mb-2 font-mono">國立中山大學</span>
+                            <p class="text-xs text-gray-600">英語語言學概論、音韻學與英語教學課程。</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot bg-tiffany border-tiffany text-white shadow-glow"></div>
+                        <div class="timeline-key-term text-tiffany">實習老師</div>
+                        <div class="timeline-date text-tiffany">2025/08-2026/02</div>
+                        <div class="timeline-info border-tiffany">
+                            <h4 class="font-bold text-tiffany text-lg">高中英語文實習老師</h4>
+                            <span class="text-xs text-gray-600 block mb-2 font-mono">高雄市立新興高級中學</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-20 bg-white reveal">
+        <div class="max-w-[1440px] mx-auto px-6">
+            <div class="flex items-end mb-12 border-b border-tiffany/20 pb-4">
+                <h2 class="text-3xl font-bold text-slate-800 mr-4">Projects</h2>
+                <span class="text-tiffany font-mono text-sm">精選專案</span>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <a href="Donggang.html" target="_blank" class="group block bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-tiffany transition-all hover:shadow-soft hover:-translate-y-2 duration-300">
+                    <div class="h-48 overflow-hidden bg-gray-100 relative">
+                        <div class="absolute inset-0 bg-tiffany/20 opacity-0 group-hover:opacity-100 transition z-10 flex items-center justify-center text-white font-bold tracking-widest">VIEW PROJECT</div>
+                        <img src="Donggang.webp" alt="東港高中" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-tiffanyDark text-xs font-bold bg-tiffanyLight px-2 py-1 rounded">雙語特色課程</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-gray-300 group-hover:text-tiffany transition"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-tiffany transition">東港高中</h3>
+                        <p class="text-gray-500 text-sm line-clamp-3">設計並執行結合在地特色的雙語課程，提升學生英語實際應用能力。</p>
+                    </div>
+                </a>
+
+                <a href="Lingya.html" target="_blank" class="group block bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-tiffany transition-all hover:shadow-soft hover:-translate-y-2 duration-300">
+                    <div class="h-48 overflow-hidden bg-gray-100 relative">
+                         <div class="absolute inset-0 bg-tiffany/20 opacity-0 group-hover:opacity-100 transition z-10 flex items-center justify-center text-white font-bold tracking-widest">VIEW PROJECT</div>
+                        <img src="Lingya.webp" alt="苓雅國中" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-tiffanyDark text-xs font-bold bg-tiffanyLight px-2 py-1 rounded">雙語生科課</span>
+                             <i class="fa-solid fa-arrow-up-right-from-square text-gray-300 group-hover:text-tiffany transition"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-tiffany transition">苓雅國中</h3>
+                        <p class="text-gray-500 text-sm line-clamp-3">結合生活科技與英語教學，讓學生在實作中自然運用語言。</p>
+                    </div>
+                </a>
+
+                <a href="Indonesia.html" target="_blank" class="group block bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-tiffany transition-all hover:shadow-soft hover:-translate-y-2 duration-300">
+                    <div class="h-48 overflow-hidden bg-gray-100 relative">
+                         <div class="absolute inset-0 bg-tiffany/20 opacity-0 group-hover:opacity-100 transition z-10 flex items-center justify-center text-white font-bold tracking-widest">VIEW PROJECT</div>
+                        <img src="Indonesia.webp" alt="跨文化交流" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-tiffanyDark text-xs font-bold bg-tiffanyLight px-2 py-1 rounded">跨文化交流</span>
+                             <i class="fa-solid fa-arrow-up-right-from-square text-gray-300 group-hover:text-tiffany transition"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-tiffany transition">苓雅國中、壽山國中</h3>
+                        <p class="text-gray-500 text-sm line-clamp-3">促進校際與國際間的文化交流活動，拓展學生國際視野。</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="activities" class="py-20 bg-tiffanyLight/20 reveal">
+        <div class="max-w-[1440px] mx-auto px-6">
+            <div class="flex items-end mb-12 border-b border-tiffany/20 pb-4">
+                <h2 class="text-3xl font-bold text-slate-800 mr-4">Activities</h2>
+                <span class="text-tiffany font-mono text-sm">學術與營隊</span>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <a href="https://lingstudent.wixsite.com/salon17" target="_blank" class="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-tiffany hover:shadow-soft transition hover:-translate-y-1">
+                    <div class="h-40 overflow-hidden bg-gray-200 relative">
+                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
+                         <img src="lst17.webp" alt="活動照片" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                         <span class="absolute bottom-3 right-3 text-white text-xs font-mono bg-tiffanyDark/80 px-2 py-1 rounded">Read More</span>
+                    </div>
+                    <div class="p-6 flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-tiffanyLight flex items-center justify-center text-tiffany font-bold group-hover:bg-tiffany group-hover:text-white transition">17</div>
+                        <div>
+                            <h4 class="font-bold text-slate-700 group-hover:text-tiffany text-xl">第17屆語言學沙龍</h4>
+                            <span class="text-xs text-gray-400 font-mono">Academic Seminar</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://lingstudent.wixsite.com/salon-16" target="_blank" class="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-tiffany hover:shadow-soft transition hover:-translate-y-1">
+                    <div class="h-40 overflow-hidden bg-gray-200 relative">
+                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
+                         <img src="lst16.webp" alt="活動照片" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                         <span class="absolute bottom-3 right-3 text-white text-xs font-mono bg-tiffanyDark/80 px-2 py-1 rounded">Read More</span>
+                    </div>
+                    <div class="p-6 flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-tiffanyLight flex items-center justify-center text-tiffany font-bold group-hover:bg-tiffany group-hover:text-white transition">16</div>
+                        <div>
+                            <h4 class="font-bold text-slate-700 group-hover:text-tiffany text-xl">第16屆語言學沙龍</h4>
+                            <span class="text-xs text-gray-400 font-mono">Academic Seminar</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://www.chinatimes.com/realtimenews/20220811002388-260405?chdtv" target="_blank" class="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-tiffany hover:shadow-soft transition hover:-translate-y-1">
+                    <div class="h-40 overflow-hidden bg-gray-200 relative">
+                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
+                         <img src="Gushan.webp" alt="活動照片" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                         <span class="absolute bottom-3 right-3 text-white text-xs font-mono bg-tiffanyDark/80 px-2 py-1 rounded">Read More</span>
+                    </div>
+                    <div class="p-6 flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-tiffanyLight flex items-center justify-center text-tiffany font-bold group-hover:bg-tiffany group-hover:text-white transition">
+                            <i class="fa-solid fa-campground"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-700 group-hover:text-tiffany text-xl">鼓山高中英語營</h4>
+                            <span class="text-xs text-gray-400 font-mono">Summer Camp</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="demo" class="py-20 bg-white reveal">
+        <div class="max-w-[1440px] mx-auto px-6">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-slate-800">Teaching Demo</h2>
+                <p class="text-gray-400 mt-2 font-mono text-xs tracking-widest">CLICK TO PLAY</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <a href="https://www.youtube.com/watch?v=0Z3V69oS6fg&list=PLyOv5JdFxYclt8sEAdMWos4UGnVBXJFvW&index=2" target="_blank" class="block group relative rounded-2xl overflow-hidden shadow-soft hover:shadow-glow transition-all duration-500">
+                    <div class="aspect-video bg-black relative">
+                        <img src="teaching.jpg" alt="教學影片" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition duration-700">
+                        <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition">
+                            <div class="w-20 h-20 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-3xl text-tiffany shadow-lg transform group-hover:scale-110 group-hover:bg-tiffany group-hover:text-white transition duration-300">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 left-0 w-full h-1 bg-tiffany transform scale-x-0 group-hover:scale-x-100 transition duration-500"></div>
+                    </div>
+                    <div class="bg-white p-6 text-center border-t border-gray-100">
+                        <h3 class="text-xl font-bold text-slate-800 group-hover:text-tiffany transition">英語教學實錄 - 新興高中英語文公開授課</h3>
+                        <p class="text-sm text-gray-500 mt-2">龍騰B3U7 Bodies Speak Louder Than Words Padlets融入教學。</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-20 bg-tiffanyLight/10 relative overflow-hidden reveal">
+        <div class="max-w-[1440px] mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">Courses & Skills</h2>
+                <p class="text-gray-400 text-sm font-mono"><i class="fa-solid fa-arrow-pointer animate-bounce mr-2"></i>HOVER TO EXPAND</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 items-start">
+                
+                <div class="skill-card rounded-2xl p-8 shadow-sm">
+                    <div class="flex items-center justify-start gap-4 mb-6 border-b border-gray-100 pb-4">
+                        <i class="fa-solid fa-book text-3xl text-tiffany"></i>
+                        <h3 class="text-2xl font-bold text-slate-700">語言學類</h3>
+                    </div>
+                    <ul class="space-y-3 text-slate-600 text-sm">
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 語音學</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 句法學</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 語言測驗</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 語料庫語言學</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 漢英比較句法</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 外語教學與科技</li>
+                    </ul>
+                </div>
+
+                <div class="skill-card rounded-2xl p-8 shadow-sm">
+                    <div class="flex items-center justify-start gap-4 mb-6 border-b border-gray-100 pb-4">
+                        <i class="fa-solid fa-chalkboard-user text-3xl text-tiffany"></i>
+                        <h3 class="text-2xl font-bold text-slate-700">教育專業</h3>
+                    </div>
+                    <ul class="space-y-3 text-slate-600 text-sm">
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 教育概論</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 學習評量</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 教學原理</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 班級經營</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 教育心理學</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 青少年心理學</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 教育專業精進</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 雙語教材教法</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 雙語教學實習</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 英語教材教法</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 英語教學實習</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 輔導原理與實務</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 課程發展與設計</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 特殊教育概論</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> STEAM探究與實作</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-tiffany mr-2"></i> 職業教育與生涯規劃</li>
+                    </ul>
+                </div>
+
+                <div class="skill-card rounded-2xl p-8 shadow-sm">
+                    <div class="flex items-center justify-start gap-4 mb-6 border-b border-gray-100 pb-4">
+                        <i class="fa-solid fa-robot text-3xl text-tiffany"></i>
+                        <h3 class="text-2xl font-bold text-slate-700">程式與 AI</h3>
+                    </div>
+                    <ul class="space-y-3 text-slate-600 text-sm">
+                        <li class="flex items-center"><i class="fa-solid fa-code text-tiffany mr-2"></i> 程式設計</li>
+                        <li class="flex items-center"><i class="fa-solid fa-code text-tiffany mr-2"></i> 程式應用（Python）</li>
+                        <li class="flex items-center"><i class="fa-solid fa-chart-simple text-tiffany mr-2"></i> 量化資料分析（SPSS）</li>
+                        <li class="flex items-center"><i class="fa-solid fa-chart-simple text-tiffany mr-2"></i> R語言與數據分析</li>
+                        <li class="flex items-center"><i class="fa-solid fa-code text-tiffany mr-2"></i> 基礎程式設計與應用（Python）</li>
+                        <li class="flex items-center"><i class="fa-solid fa-brain text-tiffany mr-2"></i> 自然語言：語言與邏輯（NLP）</li>
+                        <li class="flex items-center"><i class="fa-solid fa-brain text-tiffany mr-2"></i> AI機器學習模型實作初探</li>
+                        <li class="flex items-center"><i class="fa-solid fa-shapes text-tiffany mr-2"></i> Scratch 積木程式專案實作</li>
+                        <li class="flex items-center"><i class="fa-solid fa-brain text-tiffany mr-2"></i> 從程式碼到文本分析（NLP）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center border-t border-gray-200 pt-8">
+                <span class="text-gray-400 text-xs font-bold uppercase tracking-[0.2em]">Data Sources & Tools</span>
+                <div class="flex justify-center gap-4 mt-4 flex-wrap">
+                    <a href="https://youglish.com/" target="_blank" class="px-4 py-1 border border-gray-300 rounded-full text-gray-500 text-xs hover:border-tiffany hover:text-white hover:bg-tiffany transition cursor-pointer">Youglish</a>
+                    <a href="https://www.english-corpora.org/coca/" target="_blank" class="px-4 py-1 border border-gray-300 rounded-full text-gray-500 text-xs hover:border-tiffany hover:text-white hover:bg-tiffany transition cursor-pointer">Corpus - COCA</a>
+                    <a href="https://dictionary.cambridge.org/" target="_blank" class="px-4 py-1 border border-gray-300 rounded-full text-gray-500 text-xs hover:border-tiffany hover:text-white hover:bg-tiffany transition cursor-pointer">Cambridge Dictionary</a>
+                    <a href="https://www.freecollocation.com/" target="_blank" class="px-4 py-1 border border-gray-300 rounded-full text-gray-500 text-xs hover:border-tiffany hover:text-white hover:bg-tiffany transition cursor-pointer">Oxford Collocation</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="bg-tiffanyDark text-white py-20 reveal">
+        <div class="max-w-[1440px] mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-10 text-white">Contact Me</h2>
+            <div class="flex flex-col md:flex-row justify-center gap-8 mb-12">
+                 <div class="flex items-center justify-center gap-3 p-4 border border-white/20 rounded-lg bg-white/5 backdrop-blur hover:bg-white/10 transition group">
+                    <i class="fa-solid fa-phone text-tiffanyLight group-hover:scale-110 transition"></i>
+                    <a href="tel:+886930322703" class="hover:text-tiffanyLight transition font-mono tracking-wider">0930-322-703</a>
+                </div>
+                
+                <div class="flex items-center justify-center gap-3 p-4 border border-white/20 rounded-lg bg-white/5 backdrop-blur hover:bg-white/10 transition group">
+                    <i class="fa-solid fa-envelope text-tiffanyLight group-hover:scale-110 transition"></i>
+                    <a href="mailto:m101020008@g-mail.nsysu.edu.tw" class="hover:text-tiffanyLight transition font-mono tracking-wider">m101020008@g-mail.nsysu.edu.tw</a>
+                </div>
+                
+                <div class="flex items-center justify-center gap-3 p-4 border border-white/20 rounded-lg bg-white/5 backdrop-blur cursor-default">
+                    <i class="fa-solid fa-fingerprint text-tiffanyLight"></i>
+                    <span class="font-mono tracking-wider">ID: 10320092</span>
+                </div>
+            </div>
+            
+            <p class="text-xs text-tiffanyLight/60 font-mono">
+                &copy; 2025 Chen, Hsien-Wei. All rights reserved. <br>
+                DESIGNED WITH <i class="fa-solid fa-bolt text-yellow-300 mx-1"></i> & TECH
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // 初始觸發一次
+        reveal();
+    </script>
+</body>
+</html>

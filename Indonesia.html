@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>苓雅 & 壽山國中：國際交流與印尼文化體驗</title>
+    <linkpreconnect="https://fonts.googleapis.com">
+    <linkpreconnect="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 定義 Tiffany Blue 色系變數 --- */
+        :root {
+            --tiffany-main: #81D8D0;   /* 經典 Tiffany Blue */
+            --tiffany-dark: #40E0D0;   /* 較深的綠松石色，用於強調 */
+            --tiffany-light: #E0F2F1;  /* 極淺的藍綠色，用於背景 */
+            --text-dark: #333333;      /* 深灰色文字 */
+            --bg-color: #F5FFFE;       /* 整體網頁背景色 */
+        }
+
+        /* --- 全局設定 --- */
+        body {
+            font-family: 'Noto Sans TC', "Microsoft JhengHei", sans-serif;
+            line-height: 1.9;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* --- 核心容器與動態邊框特效 --- */
+        .container-wrapper {
+            position: relative;
+            max-width: 900px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 4px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(129, 216, 208, 0.3);
+        }
+
+        /* 創建旋轉的漸層背景 */
+        .container-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                transparent, 
+                var(--tiffany-light), 
+                var(--tiffany-main), 
+                var(--tiffany-dark), 
+                var(--tiffany-main), 
+                var(--tiffany-light), 
+                transparent
+            );
+            animation: rotate-border 6s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate-border {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 實際放置內容的白色區塊 */
+        .container {
+            position: relative;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            z-index: 1;
+        }
+
+        /* --- 標題樣式 --- */
+        h1 {
+            text-align: center;
+            color: #008B8B; /* 大標題顏色 */
+            margin-bottom: 25px;
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+
+        h2 {
+            /* 【修改處】將顏色改為與 h1 相同的 #008B8B */
+            color: #008B8B; 
+            border-left: 5px solid var(--tiffany-main); /* 左側線條維持 Tiffany Blue */
+            padding-left: 15px;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        /* --- 課程資訊區塊 --- */
+        .info-box {
+            background-color: var(--tiffany-light);
+            border: 2px solid var(--tiffany-main);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 35px;
+            font-size: 1em;
+            box-shadow: inset 0 0 10px rgba(129, 216, 208, 0.1);
+        }
+
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            align-items: baseline;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: #008B8B;
+            min-width: 110px;
+        }
+        
+        .info-content {
+            flex: 1;
+        }
+
+        /* --- 照片網格區塊 --- */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .photo-item {
+            background-color: var(--tiffany-light);
+            width: 100%;
+            height: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+            box-shadow: 0 4px 10px rgba(129, 216, 208, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- 內文樣式 --- */
+        p {
+            margin-bottom: 20px;
+            text-align: justify;
+            color: #444;
+            font-weight: 400;
+        }
+
+        /* --- RWD 手機適配 --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                align-items: flex-start;
+            }
+            .container-wrapper {
+                padding: 3px;
+            }
+            .container {
+                padding: 25px 20px;
+            }
+            .photo-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .photo-item {
+                height: 220px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-wrapper">
+        <div class="container">
+            
+            <h1>苓雅 & 壽山國中：國際交流與印尼文化體驗</h1>
+            
+            <div class="info-box">
+                <div class="info-row">
+                    <span class="info-label">授課教師：</span>
+                    <span class="info-content">印尼師資生 等</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">協同教師：</span>
+                    <span class="info-content">陳献為</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">任教年級：</span>
+                    <span class="info-content">
+                        <strong>苓雅國中：</strong>國二<br>
+                        <strong>壽山國中：</strong>國一
+                    </span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">科目領域：</span>
+                    <span class="info-content">
+                        <strong>苓雅（國際交流）：</strong>印尼傳統蠟染、世界文化遺產<br>
+                        <strong>壽山（家政）：</strong>花生糖製作、印尼飲食文化 (Rujak Buah)
+                    </span>
+                </div>
+            </div>
+
+            <div class="photo-grid">
+                <div class="photo-item">
+                    <img src="discussion.webp" alt="世界文化遺產介紹">
+                </div>
+                <div class="photo-item">
+                    <img src="dye.webp" alt="印尼傳統蠟染">
+                </div>
+                <div class="photo-item">
+                    <img src="peanuts.webp" alt="花生糖製作">
+                </div>
+                <div class="photo-item">
+                    <img src="culture.webp" alt="Rujak Buah製作">
+                </div>
+            </div>
+
+            <section>
+                <h2>一、苓雅國中：世界文化遺產介紹</h2>
+                <p>課堂活動由印尼師資生帶領，首先展開了一場充滿趣味的團康遊戲。師資生要求學生們依次上前，聽老師在耳邊低聲說出一個世界文化遺產的名字，然後迅速把答案寫在黑板上。這項活動不僅考驗了學生們的記憶力和反應速度，也激發了他們的好勝心，看看哪一組能最快寫出正確答案。</p>
+                <p>接著，師資生向全班介紹了各個世界文化遺產，詳細說明了它們的歷史背景和文化意義。每介紹一個遺產，師資生還會示範如何用英文正確發音，並請學生們跟著複誦。這不僅幫助學生們加深了對這些文化遺產的認識，也提升了他們的英語口語能力。</p>
+                <p>最後，學生們聆聽了一個關於世界文化遺產的聽力音檔，根據音檔內容完成學習單。在這個過程中，學生們不僅訓練了自己的聽力技巧，還學習到了更多關於世界文化遺產的特色和重要性。透過這一系列的活動，學生們不僅對世界文化遺產有了更深刻的了解，還提升了自己的英語能力。</p>
+            </section>
+
+            <section>
+                <h2>二、苓雅國中：印尼傳統蠟染</h2>
+                <p>課堂一開始，印尼師資生首先進行了自我介紹，接著帶領學生們進行了一個充滿趣味的團康遊戲。這個遊戲的規則是，當音樂播放時，老師和學生們需要輪流傳接一個球；當音樂停止時，接到球的同學就要進行自我介紹。這個遊戲不僅打破了課堂的沉悶氣氛，還幫助學生們相互熟悉，增加了彼此間的交流。</p>
+                <p>在團康遊戲結束後，師資生開始介紹印尼的傳統蠟染藝術。他播放了一部影片，詳細展示了蠟染的製作過程，包括如何使用蠟和染料創作出各種精美的圖案。影片還介紹了蠟染的不同名稱和風格，使學生們對這門傳統工藝有了更深入的了解。</p>
+                <p>隨後，學生們拿起畫紙，開始設計和繪製屬於自己的蠟染圖案。每個人都發揮了創意，設計出獨特的作品。完成後，學生們依次上台展示自己的作品，並進行口頭介紹。這個環節不僅激發了學生們的藝術創作力，也提供了一個練習口語表達的機會，使他們在輕鬆愉快的氣氛中提升了語言能力。</p>
+            </section>
+
+            <section>
+                <h2>三、壽山國中：家政－花生糖製作</h2>
+                <p>課堂由中師介紹花生糖的製作材料，並且使用雙語進行說明，讓學生們能更好地理解每一種材料的用途和名稱。這不僅有助於語言學習，也增加了課堂的趣味性和實用性。</p>
+                <p>接著，學生們與印尼師資生配對分組，共同完成花生糖的製作。在製作過程中，學生們需要特別注意火候的控制，避免砂糖燒焦，並確保它能與花生完美融合。這個過程不僅需要耐心，還考驗了學生們的協作能力和專注力。</p>
+                <p>此外，學生們還學習了如何正確使用刮勺和湯勺，這些工具在製作花生糖的過程中扮演了重要角色。通過實際操作，學生們不僅掌握了製作技巧，還提升了動手能力和解決問題的能力。</p>
+                <p>在大家的共同努力下，花生糖終於製作完成。最後，印尼師資生與台灣學生們一起品嚐自己親手製作的花生糖，享受這份甜蜜的成果。這次活動不僅增進了兩地學生之間的交流和友誼，也讓他們在實踐中學到了許多有價值的知識和技能。</p>
+            </section>
+
+            <section>
+                <h2>四、壽山國中：印尼飲食文化－Rujak Buah 製作</h2>
+                <p>課堂由印尼師資生 Adam 開場，向學生們介紹了印尼常見的美食。Adam 不僅展示了這些美食的多樣性和特色，還將它們與台灣的在地美食進行了比較，幫助學生們發現兩地文化之間的相似與不同之處。這一環節不僅讓學生們對異國美食有了更深入的了解，也增進了他們對不同文化的尊重和欣賞。</p>
+                <p>接著，Adam 引入了今天的課程主題——製作名為 Rujak Buah 的小吃。Rujak Buah 是一種印尼的水果沙拉，以其獨特的風味而著稱。Adam 詳細介紹了製作 Rujak Buah 所需的各種材料與特殊香料，並演示了具體的製作技巧。他強調了每一種材料在整體口味中的作用，並展示了如何將這些材料巧妙地結合在一起。</p>
+                <p>在 Adam 的指導下，學生們分組進行實際操作。他們使盡全力準備所有材料，仔細按照步驟進行製作。每組學生都選擇了自己喜歡的水果，並沾上精心調製的 Rujak Buah 醬料。製作過程中，學生們不僅學習了如何製作這道獨特的小吃，還體驗到了合作的樂趣和成就感。</p>
+            </section>
+
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨文化交流與海洋環境保育特色課程</title>
+    <linkpreconnect="https://fonts.googleapis.com">
+    <linkpreconnect="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 定義 Tiffany Blue 色系變數 --- */
+        :root {
+            --tiffany-main: #81D8D0;   /* 經典 Tiffany Blue */
+            --tiffany-dark: #40E0D0;   /* 較深的綠松石色 */
+            --tiffany-light: #E0F2F1;  /* 極淺的藍綠色 */
+            --text-dark: #333333;      /* 深灰色文字 */
+            --bg-color: #F5FFFE;       /* 背景色 */
+            --title-color: #008B8B;    /* 統一的標題顏色 (深青色) */
+        }
+
+        /* --- 全局設定 --- */
+        body {
+            font-family: 'Noto Sans TC', "Microsoft JhengHei", sans-serif;
+            line-height: 1.9; 
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* --- 核心容器與動態邊框特效 --- */
+        .container-wrapper {
+            position: relative;
+            max-width: 900px;
+            width: 100%;
+            border-radius: 16px; 
+            padding: 4px; 
+            overflow: hidden; 
+            box-shadow: 0 10px 30px rgba(129, 216, 208, 0.3);
+        }
+
+        /* 旋轉背景特效 */
+        .container-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                transparent, 
+                var(--tiffany-light), 
+                var(--tiffany-main), 
+                var(--tiffany-dark), 
+                var(--tiffany-main), 
+                var(--tiffany-light), 
+                transparent
+            );
+            animation: rotate-border 6s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate-border {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 內容區塊 */
+        .container {
+            position: relative;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            z-index: 1;
+        }
+
+        /* --- 標題樣式 --- */
+        h1 {
+            text-align: center;
+            color: var(--title-color); /* 使用統一的標題色 */
+            margin-bottom: 25px;
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+
+        h2 {
+            color: var(--title-color); /* 修改：與 h1 顏色一致 */
+            border-left: 5px solid var(--tiffany-main); /* 保留左側 Tiffany 裝飾線 */
+            padding-left: 15px;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            font-weight: 700; /* 加粗一點以匹配主標題的份量感 */
+        }
+
+        /* --- 課程資訊區塊 --- */
+        .info-box {
+            background-color: var(--tiffany-light);
+            border: 2px solid var(--tiffany-main);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 35px;
+            font-size: 1em;
+            box-shadow: inset 0 0 10px rgba(129, 216, 208, 0.1);
+        }
+
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            align-items: baseline;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: var(--title-color); /* 標籤顏色也統一，視覺更協調 */
+            min-width: 110px;
+        }
+
+        /* --- 照片網格區塊 --- */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .photo-item {
+            background-color: var(--tiffany-light);
+            width: 100%;
+            height: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+            box-shadow: 0 4px 10px rgba(129, 216, 208, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- 內文樣式 --- */
+        p {
+            margin-bottom: 20px;
+            text-align: justify;
+            color: #444;
+            font-weight: 400;
+        }
+
+        /* --- RWD 手機適配 --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                align-items: flex-start;
+            }
+            .container-wrapper {
+                padding: 3px;
+            }
+            .container {
+                padding: 25px 20px;
+            }
+            .photo-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .photo-item {
+                height: 220px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-wrapper">
+        <div class="container">
+            
+            <h1>日本秋田與東港跨文化交流 & 海洋環境保育</h1>
+            
+            <div class="info-box">
+                <div class="info-row">
+                    <span class="info-label">授課教師：</span>
+                    <span>賴𥐩妘、石井李佳、潘家軒、李岳璋</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">協同教師：</span>
+                    <span>陳献為</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">任教年級：</span>
+                    <span>高一</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">任教科目：</span>
+                    <span>日本秋田與東港跨文化交流 / 海洋環境保育特色課程</span>
+                </div>
+            </div>
+
+            <div class="photo-grid">
+                <div class="photo-item">
+                    <img src="instruction.webp" alt="課程說明">
+                </div>
+                <div class="photo-item">
+                    <img src="Jiaxuan.webp" alt="家軒老師">
+                </div>
+                <div class="photo-item">
+                    <img src="Momoka.webp" alt="Momoka同學">
+                </div>
+                <div class="photo-item">
+                    <img src="students.webp" alt="學生互動">
+                </div>
+            </div>
+
+            <section>
+                <h2>一、日本秋田與東港跨文化交流</h2>
+                <p>今天的課堂活動由來自日本秋田縣的ももか開始，她為大家介紹了秋田縣的特色，包括生剝鬼節、叉牙魚以及當地著名的水族館。這些介紹讓學生們對秋田縣的文化和自然景觀有了更深的了解。</p>
+                <p>隨後，𥐩妘向大家介紹了東港地區的特色。她提到了傳統的擲筊儀式、盛大的東港王船祭以及著名的黑鮪魚，讓來自日本的ももか和其他學生們了解了東港的獨特魅力。</p>
+                <p>在了解了秋田和東港的主要特色之後，東港高中的同學們開始思考，除了王船和黑鮪魚之外，東港還有哪些必須知道的特色。他們將這些特色彙整起來，並進行了詳細的介紹，讓ももか對東港有了更全面的認識。</p>
+                <p>從東港高中學生們的介紹中，我們了解到東港高中的悠久歷史，以及當地著名的美食如飯湯等。這次的交流活動不僅讓學生們增進了對彼此文化的了解，也促進了國際友誼和文化交流。</p>
+            </section>
+
+            <section>
+                <h2>二、海洋環境保育特色課程</h2>
+                <p>這堂課以台灣海岸的辨識作為序曲，學生們首先被要求判斷北海岸、東北角以及大鵬灣的位置。通過這個活動，讓東港高中的學生們反思自己熟悉的台灣海域是否曾遭受過污染。</p>
+                <p>接著，由家軒介紹國際上對船隻排放廢油的規範。他詳細解釋了船上哪些活動會產生廢棄物，並引導學生們思考如何防止這些廢棄物排放到海洋中，強調環境保護的重要性。</p>
+                <p>隨後，岳璋做了總結，他介紹了郵輪和乘客每天產生的污染量，並強調了海洋保育的重要性。岳璋還提出了跨領域合作的重要性，旨在告訴學生們跨領域的合作可以有效解決許多環境問題。</p>
+                <p>最後，學生們通過 Blooket 的遊戲來檢視今天所學習到的單字和跨領域知識。這次的課程不僅提升了學生們的環保意識，還培養了他們跨學科思考和合作解決問題的能力。</p>
+            </section>
+
+        </div>
+    </div>
+
+</body>
+</html>

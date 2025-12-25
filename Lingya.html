@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>苓雅國中－雙語生科課：太陽能電動車</title>
+    <linkpreconnect="https://fonts.googleapis.com">
+    <linkpreconnect="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 定義 Tiffany Blue 色系變數 --- */
+        :root {
+            --tiffany-main: #81D8D0;   /* 經典 Tiffany Blue */
+            --tiffany-dark: #40E0D0;   /* 較深的綠松石色 */
+            --tiffany-light: #E0F2F1;  /* 極淺的藍綠色 */
+            --text-dark: #333333;      /* 深灰色文字 */
+            --bg-color: #F5FFFE;       /* 背景色 */
+            --title-color: #008B8B;    /* 統一的標題顏色 (深青色) */
+        }
+
+        /* --- 全局設定 --- */
+        body {
+            font-family: 'Noto Sans TC', "Microsoft JhengHei", sans-serif;
+            line-height: 1.9;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* --- 核心容器與動態邊框特效 --- */
+        .container-wrapper {
+            position: relative;
+            max-width: 900px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 4px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(129, 216, 208, 0.3);
+        }
+
+        /* 旋轉背景特效 */
+        .container-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                transparent, 
+                var(--tiffany-light), 
+                var(--tiffany-main), 
+                var(--tiffany-dark), 
+                var(--tiffany-main), 
+                var(--tiffany-light), 
+                transparent
+            );
+            animation: rotate-border 6s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate-border {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 內容區塊 */
+        .container {
+            position: relative;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            z-index: 1;
+        }
+
+        /* --- 標題樣式 --- */
+        h1 {
+            text-align: center;
+            color: var(--title-color); /* 使用變數統一顏色 */
+            margin-bottom: 25px;
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+
+        h2 {
+            color: var(--title-color); /* 修改：顏色與 H1 一致 */
+            border-left: 5px solid var(--tiffany-main); /* 保留 Tiffany 裝飾線 */
+            padding-left: 15px;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            font-weight: 700; /* 加粗 */
+        }
+
+        /* --- 課程資訊區塊 --- */
+        .info-box {
+            background-color: var(--tiffany-light);
+            border: 2px solid var(--tiffany-main);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 35px;
+            font-size: 1em;
+            box-shadow: inset 0 0 10px rgba(129, 216, 208, 0.1);
+        }
+
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            align-items: baseline;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: var(--title-color); /* 標籤顏色也統一 */
+            min-width: 110px;
+        }
+
+        /* --- 照片網格區塊 --- */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .photo-item {
+            background-color: var(--tiffany-light);
+            width: 100%;
+            height: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+            box-shadow: 0 4px 10px rgba(129, 216, 208, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- 內文樣式 --- */
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+            color: #444;
+            font-weight: 400;
+        }
+        
+        ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+            color: #444;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* --- RWD 手機適配 --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                align-items: flex-start;
+            }
+            .container-wrapper {
+                padding: 3px;
+            }
+            .container {
+                padding: 25px 20px;
+            }
+            .photo-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .photo-item {
+                height: 220px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-wrapper">
+        <div class="container">
+            
+            <h1>苓雅國中－雙語生科課：太陽能電動車</h1>
+            
+            <div class="info-box">
+                <div class="info-row">
+                    <span class="info-label">授課教師：</span>
+                    <span>丁毓佩老師、Ms. Oli</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">協同教師：</span>
+                    <span>陳献為</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">任教年級：</span>
+                    <span>國二</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">任教科目：</span>
+                    <span>生活科技（雙語）／ 太陽能電動車</span>
+                </div>
+            </div>
+
+            <div class="photo-grid">
+                <div class="photo-item">
+                    <img src="assistance.webp" alt="教學情境">
+                </div>
+                <div class="photo-item">
+                    <img src="Ding.webp" alt="學生實作">
+                </div>
+                <div class="photo-item">
+                    <img src="working on.webp" alt="戶外測試">
+                </div>
+                <div class="photo-item">
+                    <img src="sun.webp" alt="師生互動">
+                </div>
+            </div>
+
+            <section>
+                <h2>一、教與學之優點及特色</h2>
+                <p>中師與外師協同教學，中師於課堂中使用大量課室英語，而外師則在學生作業時，巡迴指導，並以英語與學生互動，解決學生的疑惑。</p>
+                <p>中師的課室英語與教學毫無衝突。常見的課室英語如指令及步驟解釋；而教學內容，如專業名詞解釋以及重點活動，多以中文講解。</p>
+                <p>教師在進行專業名詞（如器材）的解釋時，會請學生複頌一次該器材的中英文名稱，以加強記憶。</p>
+                <p>學生做焊接以及正負極連結時非常認真。若有同學進度落後，也會相互協助。此外，若是學生遇到困難，也會積極詢問中師以及外師如何解決。</p>
+                <p>教師投影片的文字僅有器材名詞解釋，其餘步驟多使用多模態（圖片）呈現，讓學生便於理解最後焊接完成的成果圖。</p>
+            </section>
+
+            <section>
+                <h2>二、教學步驟</h2>
+                <p>教師說明今日的課程目標有兩項，達成第一項者可得 80 分，完成兩項者可得 100 分：</p>
+                <ul>
+                    <li>(1) 利用太陽能板驅使馬達運作。</li>
+                    <li>(2) 焊上電池驅使馬達運作。</li>
+                </ul>
+                <p>解釋如何將馬達的正負極線連結至太陽能板的正負極。</p>
+                <p>解釋如何將電池的正負極連結與馬達的正負極連結。</p>
+                <p>要求學生至走廊進行太陽能板馬達運作測試。</p>
+                <p>要求學生將電池正負極與馬達連接後，進行馬達運轉測試。</p>
+            </section>
+
+            <section>
+                <h2>三、學生的學習表現</h2>
+                <p>能夠理解基本課室英語，以及能夠與外師溝通。</p>
+                <p>能夠將上周完成的太陽能板正負極連接至馬達的正負極。</p>
+                <p>若是太陽能板無法使馬達運轉，必須了解問題，並想辦法解決（如：絕緣體未剪導致接觸不良）。</p>
+                <p>能夠將公母線的「公頭」剪裁下焊接至馬達，並將「母頭」焊接在能源板上，並將兩者連接，使電池的電力驅使馬達運轉。</p>
+            </section>
+
+            <section>
+                <h2>四、學習與收穫</h2>
+                <p>教師的部分課室用語，會要求學生給予回應，並吸引學生的注意。例如：老師說 <strong>"Eyes on me"</strong>，學生須回答 <strong>"Eyes on you"</strong>。另一方面，當教師要求學生停止手邊動作會說 <strong>"Hands"</strong>，學生須回答 <strong>"behind back"</strong>。</p>
+                <p>雙語教學的目的不要求使用的英語比例，而是讓學生聽得懂常用的生活英語。為了讓學生能理解課程內容，在講解艱澀議題時需多使用華語。</p>
+                <p>有些學生的進度較為落後，口頭解釋很難讓他們理解，多使用多模態（圖像），並且親自下台指導，學生會更加明白如何布置電路。</p>
+                <p>大部分學生在測試太陽能驅使馬達運轉時很常失敗，這個時候需要提示學生，是否是絕緣體沒有清除乾淨導致接觸不良，並要求學生再試想其他因素，並持續嘗試，直到馬達完全運轉為止（所有學生最後皆有達成）。</p>
+            </section>
+
+        </div>
+    </div>
+
+</body>
+</html>
