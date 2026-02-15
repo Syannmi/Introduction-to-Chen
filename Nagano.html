@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新興高中－國際交流計畫：新興高中 X 長野高校</title>
+    <linkpreconnect="https://fonts.googleapis.com">
+    <linkpreconnect="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 定義 Tiffany Blue 色系變數 --- */
+        :root {
+            --tiffany-main: #81D8D0;   /* 經典 Tiffany Blue */
+            --tiffany-dark: #40E0D0;   /* 較深的綠松石色 */
+            --tiffany-light: #E0F2F1;  /* 極淺的藍綠色 */
+            --text-dark: #333333;      /* 深灰色文字 */
+            --bg-color: #F5FFFE;       /* 背景色 */
+            --title-color: #008B8B;    /* 統一的標題顏色 (深青色) */
+        }
+
+        /* --- 全局設定 --- */
+        body {
+            font-family: 'Noto Sans TC', "Microsoft JhengHei", sans-serif;
+            line-height: 1.9;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* --- 核心容器與動態邊框特效 --- */
+        .container-wrapper {
+            position: relative;
+            max-width: 900px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 4px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(129, 216, 208, 0.3);
+        }
+
+        /* 旋轉背景特效 */
+        .container-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                transparent, 
+                var(--tiffany-light), 
+                var(--tiffany-main), 
+                var(--tiffany-dark), 
+                var(--tiffany-main), 
+                var(--tiffany-light), 
+                transparent
+            );
+            animation: rotate-border 6s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate-border {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 內容區塊 */
+        .container {
+            position: relative;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            z-index: 1;
+        }
+
+        /* --- 標題樣式 --- */
+        h1 {
+            text-align: center;
+            color: var(--title-color); /* 使用變數統一顏色 */
+            margin-bottom: 25px;
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+
+        h2 {
+            color: var(--title-color); /* 修改：顏色與 H1 一致 */
+            border-left: 5px solid var(--tiffany-main); /* 保留 Tiffany 裝飾線 */
+            padding-left: 15px;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            font-weight: 700; /* 加粗 */
+        }
+
+        /* --- 課程資訊區塊 --- */
+        .info-box {
+            background-color: var(--tiffany-light);
+            border: 2px solid var(--tiffany-main);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 35px;
+            font-size: 1em;
+            box-shadow: inset 0 0 10px rgba(129, 216, 208, 0.1);
+        }
+
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            align-items: baseline;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: var(--title-color); /* 標籤顏色也統一 */
+            min-width: 110px;
+        }
+
+        /* --- 照片網格區塊 --- */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .photo-item {
+            background-color: var(--tiffany-light);
+            width: 100%;
+            height: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+            box-shadow: 0 4px 10px rgba(129, 216, 208, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- 內文樣式 --- */
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+            color: #444;
+            font-weight: 400;
+        }
+        
+        ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+            color: #444;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* --- RWD 手機適配 --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                align-items: flex-start;
+            }
+            .container-wrapper {
+                padding: 3px;
+            }
+            .container {
+                padding: 25px 20px;
+            }
+            .photo-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .photo-item {
+                height: 220px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-wrapper">
+        <div class="container">
+            
+            <h1>新興高中－國際交流計畫：新興高中 X 長野高校</h1>
+            
+            <div class="info-box">
+                <div class="info-row">
+                    <span class="info-label">授課教師：</span>
+                    <span>陳献為</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">任教年級：</span>
+                    <span>高一、二</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">任教科目：</span>
+                    <span>英日語簡報設計－南臺灣景點與文化</span>
+                </div>
+            </div>
+
+            <div class="photo-grid">
+                <div class="photo-item">
+                    <img src="Nagano.jpg" alt="大合照">
+                </div>
+                <div class="photo-item">
+                    <img src="welcome.jpg" alt="致詞">
+                </div>
+                <div class="photo-item">
+                    <img src="presentation.jpg" alt="台灣生報告">
+                </div>
+                <div class="photo-item">
+                    <img src="majiang.jpg" alt="麻將賓果體驗">
+                </div>
+            </div>
+
+            <section>
+                <h2>一、教學簡介</h2>
+                <p>「長野高校專題交流」是我在新興高中實習期間印象最為深刻的一項活動。</p>
+                <p>於活動前一個月，我即開始指導學生製作自我介紹影片與簡報，過程中需反覆協助修正英文文法錯誤及內容邏輯不清之處，投入相當多的時間與心力。</p>
+                <p>然而，在指導過程中，我也深刻感受到學生在自我管理與責任感上的不足，屢次未能依照提醒準時繳交修正內容，讓我一度感到挫折與不滿。</p>
+                <p>所幸在多次溝通與督促後，學生最終仍完成修改，並於活動後主動表示自己相較去年有明顯進步，這也讓我重新肯定持續引導與要求的重要性。</p>
+            </section>
+
+            <section>
+                <h2>二、教學心得</h2>
+                <p>在正式交流當天，我觀察到即使對方為日本該縣的第一志願學校，學生整體英語溝通能力仍有限，實際互動時多仰賴翻譯工具輔助。</p>
+                <p>基於現場需求，我除了協助進行日文即時翻譯，也在學生的專題內容中針對較困難的英語詞彙加註日文說明，以提升溝通順暢度。</p>
+                <p>此次經驗讓我反思國際交流活動中語言能力的實際落差，也更加體認教師在跨文化溝通中所扮演的橋梁角色。</p>
+                <p>透過本次活動，我不僅在語言輔助、專題指導與臨場應變上獲得實質成長，也更清楚認知到，教師的專業不只是教學技巧，更包含耐心、堅持與引導學生承擔責任的能力，對我的教師專業發展具有深遠影響。</p>
+            </section>
+
+            <section>
+                <h2>三、教學成果</h2>
+                <p>在專題初期，學生普遍面臨多項困難，包含英文文法錯誤頻繁、翻譯不精確、簡報架構鬆散，以及關鍵字詞與句子的發音不正確等問題，整體表現與國際交流需求仍有明顯落差。</p>
+                <p>面對學生能力差異與專題難度，我採取循序漸進的指導方式，透過兩次完整的口頭報告練習，讓學生實際演練並即時修正語言使用與簡報呈現問題；同時，搭配多次簡報內容的反覆修改，逐步引導學生調整報告邏輯、簡化句型結構，並針對易錯字詞進行發音與表達上的重點指導。</p>
+                <p>經過持續的修正與練習後，學生不僅在文法正確度與發音清晰度上有明顯進步，簡報整體結構與表達自信也大幅提升。</p>
+                <p>最終，各組學生皆能完成內容清楚、表現穩定且具溝通效果的專題報告，成果相較初期有顯著成長。</p>
+                <p>此次專題指導不僅展現學生在英語應用能力上的進步，也印證我在專題導向教學、口語訓練與國際交流準備上的教學成效，成為本次實習期間最具代表性的教學成果之一。</p>
+            <section>
+                <h2>四、學生進度與作品展示</h2>
+                <p>以下為學生針對本次交流計畫所製作的英日語專案簡報與個人成果報告，展示了從初稿到最終定稿的邏輯梳理與語言優化過程。</p>
+                
+                <style>
+                    /* 作品網格專屬樣式 */
+                    .work-grid {
+                        display: grid;
+                        grid-template-columns: repeat(4, 1fr); /* 桌面版 4 欄 */
+                        gap: 15px;
+                        margin-top: 20px;
+                    }
+
+                    .work-item {
+                        text-decoration: none;
+                        background: #fff;
+                        border: 1px solid var(--tiffany-main);
+                        border-radius: 10px;
+                        overflow: hidden;
+                        transition: all 0.3s ease;
+                        display: flex;
+                        flex-direction: column;
+                    }
+
+                    .work-item:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 8px 20px rgba(129, 216, 208, 0.4);
+                        border-color: var(--tiffany-dark);
+                    }
+
+                    .work-preview {
+                        width: 100%;
+                        height: 120px;
+                        background-color: var(--tiffany-light);
+                        overflow: hidden;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    .work-preview img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        opacity: 0.9;
+                        transition: opacity 0.3s;
+                    }
+
+                    .work-item:hover .work-preview img {
+                        opacity: 1;
+                    }
+
+                    .work-title {
+                        padding: 10px;
+                        font-size: 0.85em;
+                        color: var(--title-color);
+                        font-weight: 700;
+                        text-align: center;
+                        background: #fff;
+                        border-top: 1px solid var(--tiffany-light);
+                    }
+
+                    /* RWD：平板 2x4 */
+                    @media (max-width: 900px) {
+                        .work-grid {
+                            grid-template-columns: repeat(2, 1fr);
+                        }
+                    }
+
+                    /* RWD：手機 1x8 (或維持 2x4) */
+                    @media (max-width: 480px) {
+                        .work-title {
+                            font-size: 0.75em;
+                        }
+                    }
+                </style>
+
+                <div class="work-grid">
+                    <a href="西子灣_Group 1.pdf" target="_blank" class="work-item">
+                        <div class="work-preview">
+                            <img src="G1.png" alt="作品預覽">
+                        </div>
+                        <div class="work-title">西子灣_Group 1</div>
+                    </a>
+                    <a href="衛武營_Group 2.pdf" target="_blank" class="work-item">
+                        <div class="work-preview">
+                            <img src="G2.png" alt="作品預覽">
+                        </div>
+                        <div class="work-title">衛武營_Group 2</div>
+                    </a>
+                    <a href="美濃_Group 3.pdf" target="_blank" class="work-item">
+                        <div class="work-preview">
+                            <img src="G3.png" alt="作品預覽">
+                        </div>
+                        <div class="work-title">美濃_Group 3</div>
+                    </a>
+                    <a href="駁二_Group 4.pdf" target="_blank" class="work-item">
+                        <div class="work-preview">
+                            <img src="G4.png" alt="作品預覽">
+                        </div>
+                        <div class="work-title">駁二_Group 4</div>
+                    </a>
+                    <a href="左營_Group5.pdf" target="_blank" class="work-item">
+                        <div class="work-preview">
+                            <img src="G5.png" alt="作品預覽">
+                        </div>
+                        <div class="work-title">左營_Group5</div>
+                    </a>
+                    <a href="橋頭_Group 6.pdf" target="_blank" class="work-item">
+                        <div class="work-preview">
+                            <img src="G6.png" alt="作品預覽">
+                        </div>
+                        <div class="work-title">橋頭_Group 6</div>
+                    </a>
+                    <a href="旗津_Group 7.pdf" target="_blank" class="work-item">
+                        <div class="work-preview">
+                            <img src="G7.png" alt="作品預覽">
+                        </div>
+                        <div class="work-title">旗津_Group 7</div>
+                    </a>
+                    <a href="新興_Group 8.pdf" target="_blank" class="work-item">
+                        <div class="work-preview">
+                            <img src="G8.png" alt="作品預覽">
+                        </div>
+                        <div class="work-title">新興_Group 8</div>
+                    </a>
+                </div>
+            </section>
