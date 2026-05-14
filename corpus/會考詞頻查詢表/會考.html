@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>會考英語詞頻查詢表</title>
+  <style>
+
+:root{
+  --tiffany:#0ABAB5;
+  --tiffanyLight:#E0F7F6;
+  --tiffanyDark:#008F8A;
+  --slateDark:#333333;
+  --bg:#E0F7F6;
+  --paper:#ffffff;
+  --ink:#333333;
+  --muted:#5f7f7d;
+  --accent:#0ABAB5;
+  --accent2:#008F8A;
+  --line:#bfecea;
+  --green:#008F8A;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,"Noto Sans TC","Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at top left,rgba(255,255,255,.95) 0,rgba(224,247,246,.9) 34%,rgba(10,186,181,.28) 100%),
+    linear-gradient(135deg,#ffffff 0%,#E0F7F6 45%,#b9efec 100%);
+  color:var(--ink);
+}
+header{
+  padding:38px 20px 28px;
+  text-align:center;
+  background:linear-gradient(135deg,#0ABAB5,#008F8A);
+  color:white;
+  box-shadow:0 8px 24px rgba(0,143,138,.24);
+}
+h1{margin:0;font-size:clamp(28px,4vw,44px);letter-spacing:.08em;font-weight:900}
+.subtitle{margin-top:12px;opacity:.96;line-height:1.8}
+.wrap{max-width:1160px;margin:28px auto;padding:0 18px}
+.panel{
+  background:rgba(255,255,255,.88);
+  border:1px solid rgba(10,186,181,.22);
+  border-radius:26px;
+  box-shadow:0 18px 42px rgba(0,143,138,.13),inset 0 1px 0 rgba(255,255,255,.9);
+  padding:22px;
+  backdrop-filter:blur(10px);
+}
+.searchbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.searchbar input{
+  flex:1;
+  min-width:230px;
+  font-size:22px;
+  padding:17px 21px;
+  border:2px solid #9be4e0;
+  border-radius:22px;
+  background:rgba(255,255,255,.88);
+  color:var(--slateDark);
+  outline:none;
+  transition:all .25s ease;
+  box-shadow:0 6px 16px rgba(10,186,181,.10),inset 0 1px 0 rgba(255,255,255,.9);
+}
+.searchbar input::placeholder{color:#76aaa7}
+.searchbar input:focus{
+  border-color:#0ABAB5;
+  background:#ffffff;
+  box-shadow:0 0 0 5px rgba(10,186,181,.18),0 12px 28px rgba(10,186,181,.18);
+  transform:translateY(-1px);
+}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.chip{
+  border:1px solid rgba(10,186,181,.28);
+  background:#ffffff;
+  border-radius:999px;
+  padding:8px 14px;
+  color:#008F8A;
+  cursor:pointer;
+  font-weight:700;
+  transition:all .2s ease;
+}
+.chip:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(10,186,181,.13)}
+.chip.active{background:#0ABAB5;color:white;border-color:#0ABAB5;box-shadow:0 10px 24px rgba(10,186,181,.22)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}
+.stat{
+  background:#ffffff;
+  border:1px solid rgba(10,186,181,.20);
+  border-radius:20px;
+  padding:15px;
+  text-align:center;
+  box-shadow:0 8px 18px rgba(10,186,181,.08);
+}
+.num{font-weight:900;font-size:24px;color:#008F8A}
+.layout{display:grid;grid-template-columns:360px 1fr;gap:18px;margin-top:16px}
+.list{max-height:640px;overflow:auto;padding-right:6px}
+.word{
+  width:100%;
+  text-align:left;
+  border:1px solid rgba(10,186,181,.22);
+  background:#ffffff;
+  border-radius:20px;
+  padding:13px 15px;
+  margin:0 0 11px;
+  cursor:pointer;
+  transition:.18s ease;
+  box-shadow:0 4px 12px rgba(10,186,181,.06);
+}
+.word:hover,.word.active{
+  transform:translateY(-2px);
+  border-color:#0ABAB5;
+  box-shadow:0 12px 26px rgba(10,186,181,.18);
+  background:linear-gradient(135deg,#ffffff,#E0F7F6);
+}
+.wtop{display:flex;justify-content:space-between;gap:10px}
+.w{font-size:21px;font-weight:900;color:#008F8A}
+.rank{color:var(--muted);font-size:13px}
+.badges{margin-top:7px;display:flex;gap:6px;flex-wrap:wrap}
+.badge{font-size:12px;border-radius:999px;background:#E0F7F6;color:#008F8A;padding:4px 9px;font-weight:700}
+.detail{min-height:640px}
+.empty{padding:70px 20px;text-align:center;color:var(--muted)}
+.occHead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:1px solid rgba(10,186,181,.22);padding-bottom:14px;margin-bottom:16px}
+.occTitle{font-size:34px;font-weight:900;color:#008F8A}
+.small{color:var(--muted);font-size:14px}
+.occList{max-height:540px;overflow:auto}
+.occ{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+  background:#ffffff;
+  border:1px solid rgba(10,186,181,.22);
+  border-radius:20px;
+  padding:15px;
+  margin-bottom:13px;
+  transition:.18s ease;
+  box-shadow:0 4px 14px rgba(10,186,181,.06);
+}
+.occ:hover{
+  transform:translateY(-2px);
+  border-color:#0ABAB5;
+  box-shadow:0 12px 26px rgba(10,186,181,.18);
+  background:linear-gradient(135deg,#ffffff,#E0F7F6);
+}
+.file{font-weight:900;color:#008F8A;word-break:break-all}
+.snippet{margin-top:9px;line-height:1.7;color:#333333}
+.hi{background:#a9f1ed;color:#004f4c;border-radius:5px;padding:0 3px;font-weight:900}
+.footer{font-size:13px;color:#008F8A;margin-top:14px;line-height:1.8}
+.error{background:#fff7f7;border:1px solid #f1b6b6;color:#7a1f1f;border-radius:18px;padding:16px;line-height:1.7}
+@media(max-width:850px){
+  .layout{grid-template-columns:1fr}
+  .detail,.list{max-height:none;min-height:auto}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+
+</style>
+</head>
+<body>
+<header>
+  <h1>會考英語詞頻查詢表</h1>
+  <div class="subtitle">輸入字首即可查詢，例如 <b>wo</b> → worry / wolf / worried；點擊單字後可開啟 PDF 頁面位置。</div>
+</header>
+<main class="wrap">
+  <section class="panel">
+    <div class="searchbar"><input id="q" autofocus placeholder="輸入英文單字、字首或片段，例如：wo / water / worried"></div>
+    <div class="filters">
+      <button class="chip active" data-mode="prefix">字首搜尋</button>
+      <button class="chip" data-mode="contains">包含搜尋</button>
+      <button class="chip" data-mode="exact">完全符合</button>
+    </div>
+    <div class="stats">
+      <div class="stat"><div id="s1" class="num">—</div><div>xlsx 詞條</div></div>
+      <div class="stat"><div id="s2" class="num">—</div><div>PDF 有對應</div></div>
+      <div class="stat"><div id="s3" class="num">—</div><div>PDF 出現次數</div></div>
+      <div class="stat"><div id="s4" class="num">—</div><div>PDF 文件數</div></div>
+    </div>
+    <div class="layout"><aside class="list" id="wordList"></aside><section class="detail panel" id="detail"></section></div>
+    <div class="footer">During the corpus testing phase, if there are any errors, feedback and corrections are very welcome.</code>。</div>
+  </section>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+  const $ = (s) => document.querySelector(s);
+  const list = $('#wordList');
+  const detail = $('#detail');
+  const q = $('#q');
+  let mode = 'prefix';
+  let current = null;
+
+  function fmt(n){ return (Number(n) || 0).toLocaleString(); }
+  function escapeHtml(str){
+    return String(str ?? '').replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+  }
+  function escapeRegExp(str){
+    return String(str ?? '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+  function pdfHref(file, page){
+    return encodeURI(String(file)) + '#page=' + encodeURIComponent(page || 1);
+  }
+  function getData(){
+    return {
+      words: window.WORD_DATA || [],
+      stats: window.SITE_STATS || {word_count:0, matched_words:0, total_occurrences:0, pdf_count:0}
+    };
+  }
+  function showLoadError(){
+    list.innerHTML = '<div class="error">資料檔 data.js 沒有成功載入。請確認 index.html 和 data.js 放在同一個資料夾，且不要只單獨打開 index.html。</div>';
+    detail.innerHTML = '<div class="empty">資料尚未載入。</div>';
+  }
+  function showStats(){
+    const {stats} = getData();
+    $('#s1').textContent = fmt(stats.word_count);
+    $('#s2').textContent = fmt(stats.matched_words);
+    $('#s3').textContent = fmt(stats.total_occurrences);
+    $('#s4').textContent = fmt(stats.pdf_count);
+  }
+  function matchEntry(e, term){
+    const word = String(e.word || '').toLowerCase();
+    if(!term) return (Number(e.pdf_occurrences) || 0) > 0;
+    if(mode === 'prefix') return word.startsWith(term);
+    if(mode === 'contains') return word.includes(term);
+    return word === term;
+  }
+  function renderList(){
+    const {words} = getData();
+    if(!words.length){ showLoadError(); return; }
+    const term = q.value.trim().toLowerCase();
+    let arr = words.filter(e => matchEntry(e, term));
+    arr.sort((a,b) => ((Number(b.pdf_occurrences)||0) - (Number(a.pdf_occurrences)||0)) || ((Number(a.rank)||999999) - (Number(b.rank)||999999)) || String(a.word).localeCompare(String(b.word)));
+    arr = arr.slice(0,300);
+    if(!arr.length){
+      list.innerHTML = '<div class="empty">沒有找到符合「' + escapeHtml(term) + '」的單字</div>';
+      detail.innerHTML = '<div class="empty">請換一個搜尋字，例如：wo、water、work。</div>';
+      return;
+    }
+    list.innerHTML = arr.map(e => {
+      const word = escapeHtml(e.word);
+      return '<button class="word ' + (current === e.word ? 'active' : '') + '" data-word="' + word + '">' +
+        '<div class="wtop"><span class="w">' + word + '</span><span class="rank">Rank ' + escapeHtml(e.rank ?? '-') + '</span></div>' +
+        '<div class="badges"><span class="badge">xlsx freq ' + fmt(e.freq) + '</span><span class="badge">PDF ' + fmt(e.pdf_occurrences) + ' 次</span><span class="badge">' + fmt(e.docs) + ' 份文件</span></div>' +
+        '</button>';
+    }).join('');
+    list.querySelectorAll('.word').forEach(b => b.addEventListener('click', () => selectWord(b.dataset.word)));
+    if(!current || !arr.some(e => e.word === current)) selectWord(arr[0].word, false);
+  }
+  function selectWord(word, rerender=true){
+    current = word;
+    const {words} = getData();
+    const e = words.find(x => x.word === word);
+    if(!e) return;
+    const items = Array.isArray(e.items) ? e.items : [];
+    const re = new RegExp('(' + escapeRegExp(e.word) + ')', 'ig');
+    let html = '<div class="occHead"><div><div class="occTitle">' + escapeHtml(e.word) + '</div>' +
+      '<div class="small">詞頻表 Rank ' + escapeHtml(e.rank ?? '-') + '｜xlsx freq ' + fmt(e.freq) + '｜PDF 中找到 ' + fmt(e.pdf_occurrences) + ' 次，分布於 ' + fmt(e.docs) + ' 份文件、' + fmt(e.pages) + ' 頁</div></div></div>';
+    if(items.length){
+      html += '<div class="occList">' + items.map(it => {
+        const snippet = escapeHtml(it.snippet).replace(re, '<span class="hi">$1</span>');
+        return '<a class="occ" href="' + pdfHref(it.file, it.page) + '" target="_blank" rel="noopener">' +
+          '<div class="file">' + escapeHtml(it.file) + '｜第 ' + escapeHtml(it.page) + ' 頁</div>' +
+          '<div class="snippet">' + snippet + '</div></a>';
+      }).join('') + '</div>';
+    } else {
+      html += '<div class="empty">這個字在目前上傳的 PDF 文字層中沒有找到；可能只存在於詞頻 xlsx，或 PDF 文字抽取結果不同。</div>';
+    }
+    detail.innerHTML = html;
+    if(rerender) renderList();
+  }
+
+  q.addEventListener('input', () => { current = null; renderList(); });
+  document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    mode = c.dataset.mode;
+    current = null;
+    renderList();
+  }));
+
+  showStats();
+  renderList();
+})();
+</script>
+</body>
+</html>
