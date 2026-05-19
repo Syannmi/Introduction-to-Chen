@@ -143,6 +143,31 @@
       box-shadow:0 8px 18px rgba(10,186,181,.18);
     }
 
+.search-box{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-bottom:24px;
+  flex-wrap:wrap;
+}
+
+.search-box input{
+  width:min(520px,100%);
+  padding:14px 18px;
+  border-radius:999px;
+  border:1px solid rgba(10,186,181,.35);
+  font:inherit;
+  outline:none;
+}
+
+.search-box button{
+  padding:14px 24px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#0ABAB5,#008F8A);
+  color:white;
+  font-weight:900;
+}
+
     .panel{
       background:#ffffff;
       border:1px solid rgba(10,186,181,.22);
@@ -293,7 +318,20 @@
     </div>
     <div class="divider"></div>
 
-    <section class="panel" aria-label="文法對照表查詢工具">
+<div class="search-box">
+  <input 
+  id="grammarSearch" 
+  type="text" 
+  placeholder="輸入關鍵字，例如：被動語態、關代、完成式"
+  onkeydown="handleSearchEnter(event)"
+>
+  <button onclick="searchGrammar()">搜尋</button>
+</div>
+
+<div id="search-results"></div>
+
+<section class="panel" aria-label="文法對照表查詢工具">
+
       <div class="controls">
         <div class="control-group">
           <span class="label">學制選擇：</span>
@@ -406,6 +444,96 @@ const grammarDB = {
       tableBox.className = '';
       tableBox.innerHTML = html;
     }
+
+function cleanText(text){
+  return String(text || "").replace(/<br>/g, " ");
+}
+
+function searchGrammar(){
+  const keyword = document.getElementById("grammarSearch").value.trim().toLowerCase();
+  const resultBox = document.getElementById("search-results");
+
+  if(!keyword){
+    resultBox.innerHTML = "";
+    return;
+  }
+
+  let results = [];
+
+  Object.keys(grammarDB).forEach(level => {
+    Object.keys(grammarDB[level]).forEach(book => {
+      grammarDB[level][book].forEach(item => {
+        Object.keys(item).forEach(key => {
+          if(key === "unit") return;
+
+          const text = cleanText(item[key]);
+
+          if(text.toLowerCase().includes(keyword)){
+let versionName = "";
+
+if(level === "high"){
+  versionName = "龍騰";
+}else{
+  if(key === "nani") versionName = "南一";
+  if(key === "hanlin") versionName = "翰林";
+  if(key === "kang") versionName = "康軒";
+}
+
+results.push({
+  level: level === "high" ? "高中" : "國中",
+  book: `B${book}`,
+  unit: item.unit,
+  version: versionName,
+  grammar: text
+});
+          }
+        });
+      });
+    });
+  });
+
+  if(results.length === 0){
+    resultBox.innerHTML = `<div class="placeholder">找不到「${keyword}」相關文法</div>`;
+    return;
+  }
+
+  let html = `
+    <div class="table-wrap" style="margin-bottom:24px;">
+      <table>
+        <thead>
+          <tr>
+            <th>學制</th>
+            <th>冊數</th>
+            <th>單元</th>
+            <th>版本</th>
+            <th>文法內容</th>
+          </tr>
+        </thead>
+        <tbody>
+  `;
+
+  results.forEach(r => {
+    html += `
+      <tr>
+        <td>${r.level}</td>
+        <td>${r.book}</td>
+        <td>${r.unit}</td>
+        <td>${r.version}</td>
+        <td>${r.grammar}</td>
+      </tr>
+    `;
+  });
+
+  html += `</tbody></table></div>`;
+  resultBox.innerHTML = html;
+}
+
+function handleSearchEnter(event){
+  if(event.key === "Enter"){
+    searchGrammar();
+  }
+}
+
   </script>
 </body>
 </html>
