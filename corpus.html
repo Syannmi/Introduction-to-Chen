@@ -130,6 +130,37 @@
       box-shadow:0 8px 18px rgba(10,186,181,.18);
     }
 
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:28px;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.back-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 18px;
+  border-radius:999px;
+  background:rgba(224,247,246,.9);
+  color:#008F8A;
+  text-decoration:none;
+  font-weight:800;
+  border:1px solid rgba(10,186,181,.22);
+  transition:all .22s ease;
+  box-shadow:0 8px 18px rgba(10,186,181,.08);
+}
+
+.back-link:hover{
+  transform:translateY(-3px);
+  background:#0ABAB5;
+  color:white;
+  box-shadow:0 14px 28px rgba(10,186,181,.18);
+}
+
     .grid{
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
@@ -250,6 +281,11 @@
   <div class="floating-circle c4"></div>
 
   <main class="container">
+    <div class="topbar">
+      <a class="back-link" href="index.html">← 回首頁</a>
+      <a class="back-link" href="grammar.html">文法查詢 →</a>
+    </div>
+
     <div class="eyebrow">English Corpus</div>
 
     <h1 class="title">英語文入學測驗語料庫</h1>
@@ -262,7 +298,7 @@
     <div class="divider"></div>
 
     <section class="grid" aria-label="考試語料庫入口">
-      <a class="card" href="會考詞頻查詢表/會考.html">
+      <a class="card" href="corpus/會考詞頻查詢表/會考.html">
         <span class="emoji">📘</span>
         <div class="exam-name">會考</div>
         <div class="desc">
@@ -271,7 +307,7 @@
         </div>
       </a>
 
-      <a class="card" href="統測詞頻查詢表/統測.html">
+      <a class="card" href="corpus/統測詞頻查詢表/統測.html">
         <span class="emoji">📗</span>
         <div class="exam-name">統測</div>
         <div class="desc">
@@ -280,7 +316,7 @@
         </div>
       </a>
 
-      <a class="card" href="學測詞頻查詢表/學測.html">
+      <a class="card" href="corpus/學測詞頻查詢表/學測.html">
         <span class="emoji">📙</span>
         <div class="exam-name">學測</div>
         <div class="desc">
@@ -289,7 +325,7 @@
         </div>
       </a>
 
-      <a class="card" href="指考詞頻查詢表/指考.html">
+      <a class="card" href="corpus/指考詞頻查詢表/指考.html">
         <span class="emoji">📕</span>
         <div class="exam-name">指考</div>
         <div class="desc">

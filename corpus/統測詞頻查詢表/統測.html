@@ -6,6 +6,77 @@
   <title>統測英文詞頻查詢表</title>
   <style>
 
+#passwordOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  backdrop-filter:blur(10px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:99999;
+}
+
+.password-box{
+  width:min(420px,90%);
+  background:white;
+  padding:42px;
+  border-radius:28px;
+  text-align:center;
+  box-shadow:0 20px 50px rgba(0,0,0,.25);
+  border:1px solid rgba(10,186,181,.25);
+}
+
+.password-box h2{
+  margin-top:0;
+  color:#008F8A;
+  font-size:32px;
+}
+
+.password-box p{
+  color:#5f7f7d;
+  margin-bottom:24px;
+}
+
+.password-box input{
+  width:100%;
+  padding:16px 18px;
+  border-radius:18px;
+  border:2px solid #9be4e0;
+  font-size:18px;
+  outline:none;
+  margin-bottom:18px;
+}
+
+.password-box input:focus{
+  border-color:#0ABAB5;
+  box-shadow:0 0 0 4px rgba(10,186,181,.15);
+}
+
+.password-box button{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:18px;
+  background:linear-gradient(135deg,#0ABAB5,#008F8A);
+  color:white;
+  font-size:18px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.password-box button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 24px rgba(10,186,181,.25);
+}
+
+#errorMsg{
+  margin-top:14px;
+  color:#d11a2a;
+  font-weight:700;
+}
+
 :root{
   --tiffany:#0ABAB5;
   --tiffanyLight:#E0F7F6;
@@ -177,6 +248,21 @@ h1{margin:0;font-size:clamp(28px,4vw,44px);letter-spacing:.08em;font-weight:900}
   </section>
 </main>
 <script src="data.js"></script>
+
+<script>
+function checkPassword(){
+  const correctPassword = "test";
+
+  const input = document.getElementById("passwordInput").value;
+
+  if(input === correctPassword){
+    document.getElementById("passwordOverlay").style.display = "none";
+  }else{
+    document.getElementById("errorMsg").textContent = "密碼錯誤";
+  }
+}
+</script>
+
 <script>
 (function(){
   const $ = (s) => document.querySelector(s);
@@ -278,5 +364,27 @@ h1{margin:0;font-size:clamp(28px,4vw,44px);letter-spacing:.08em;font-weight:900}
   renderList();
 })();
 </script>
+
+<div id="passwordOverlay">
+  <div class="password-box">
+    <h2>🔒 統測語料庫</h2>
+    <p>請輸入密碼以進入</p>
+
+    <input 
+  type="password"
+  id="passwordInput"
+  placeholder="輸入密碼"
+  autocomplete="off"
+  onkeydown="if(event.key === 'Enter') checkPassword()"
+>
+
+    <button onclick="checkPassword()">
+      進入語料庫
+    </button>
+
+    <div id="errorMsg"></div>
+  </div>
+</div>
+
 </body>
 </html>
